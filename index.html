@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huge Angry Birds Game To Play Online</title>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0873bf;
+            color: white;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .header .menu {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header .menu button {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #0873bf;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .header .menu button:hover {
+            background-color: #ffffff;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 800px;
+            height: 60vh;
+            background-color: #000;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .yt-subscribe-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .donation-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            display: none; /* Ocultar inicialmente */
+        }
+
+        .fullscreen-btns {
+            display: none; /* Ocultar en dispositivos móviles */
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                height: 50vh;
+            }
+
+            .donation-form {
+                display: block;
+                bottom: 10px;
+                top: auto;
+                transform: translate(-50%, 0);
+            }
+
+            .fullscreen-btns {
+                display: none; /* No necesario en móviles */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado con botones -->
+    <div class="header">
+        <div class="menu">
+            <button id="donateButton">💖 Donar</button>
+            <button id="enterFullscreen">Pantalla completa</button>
+            <button id="exitFullscreen">Restaurar tamaño</button>
+        </div>
+        <!-- Widget de suscripción de YouTube -->
+        <div class="yt-subscribe-container">
+            <div class="g-ytsubscribe" data-channel="venuskawaiigames" data-layout="full" data-count="default" data-onytevent="onYtEvent"></div>
+        </div>
+    </div>
+
+    <!-- Contenedor del juego -->
+    <div class="game-container" id="gameContainer">
+        <embed src="Huge Angry Birds.swf" id="gameEmbed" width="100%" height="100%">
+    </div>
+
+    <!-- Formulario de donación -->
+    <form class="donation-form" id="donationForm" action="https://www.paypal.com/donate" method="post" target="_top">
+        <input type="hidden" name="hosted_button_id" value="5C4S9WYFJCRV2">
+        <input type="image" src="https://www.paypalobjects.com/en_US/MX/i/btn/btn_donateCC_LG.gif" 
+            name="submit" 
+            title="PayPal - The safer, easier way to pay online!" 
+            alt="Donate with PayPal button" 
+            border="0">
+        <img src="https://www.paypal.com/en_MX/i/scr/pixel.gif" width="1" height="1" border="0">
+    </form>
+
+    <script>
+        function onYtEvent(payload) {
+            if (payload.eventType == 'subscribe') {
+                alert("¡Gracias por suscribirte!");
+            } else if (payload.eventType == 'unsubscribe') {
+                alert("Lamentamos que te vayas :(");
+            }
+            if (window.console) {
+                console.log('YT event: ', payload);
+            }
+        }
+
+        const gameContainer = document.getElementById('gameContainer');
+        const gameEmbed = document.getElementById('gameEmbed');
+        const enterFullscreen = document.getElementById('enterFullscreen');
+        const exitFullscreen = document.getElementById('exitFullscreen');
+        const donateButton = document.getElementById('donateButton');
+        const donationForm = document.getElementById('donationForm');
+
+        enterFullscreen.addEventListener('click', () => {
+            gameContainer.style.width = '100vw';
+            gameContainer.style.height = '100vh';
+            gameEmbed.style.width = '100%';
+            gameEmbed.style.height = '100%';
+        });
+
+        exitFullscreen.addEventListener('click', () => {
+            gameContainer.style.width = '100%';
+            gameContainer.style.maxWidth = '800px';
+            gameContainer.style.height = '60vh';
+            gameEmbed.style.width = '100%';
+            gameEmbed.style.height = '100%';
+        });
+
+        donateButton.addEventListener('click', () => {
+            donationForm.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
